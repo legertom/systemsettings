@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica,
+    Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+.dark .jsoneditor {
+  border-color: rgb(39 39 42);
+}
+
+.dark .jsoneditor-menu {
+  background: rgb(9 9 11);
+  border-bottom-color: rgb(39 39 42);
+}
+
+.dark .jsoneditor-menu a {
+  color: rgb(244 244 245);
+}
+
+.dark .jsoneditor-frame {
+  background: rgb(9 9 11);
+}
+
+.dark .jsoneditor-tree {
+  background: rgb(9 9 11);
+  color: rgb(244 244 245);
+}
+
+.dark .jsoneditor-search input {
+  background: rgb(24 24 27);
+  color: rgb(244 244 245);
+  border-color: rgb(63 63 70);
+}
