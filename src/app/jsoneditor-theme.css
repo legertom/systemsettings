@@ -1,0 +1,162 @@
+/* jsoneditor ships light-only defaults; override for dark mode + better fit */
+
+.jsoneditor {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Dark: base surfaces */
+.dark .jsoneditor-menu {
+  background-color: #0f172a;
+  border-bottom-color: #0f172a;
+}
+
+.dark .jsoneditor-navigation-bar {
+  background-color: var(--muted);
+  border-bottom-color: var(--border);
+  color: var(--muted-foreground);
+}
+
+.dark .jsoneditor-frame,
+.dark .jsoneditor-tree,
+.dark textarea.jsoneditor-text,
+.dark .ace-jsoneditor {
+  background-color: var(--card);
+  color: var(--card-foreground);
+}
+
+/* Dark: force base text color (jsoneditor sets #1a1a1a in many places) */
+.dark div.jsoneditor-field,
+.dark div.jsoneditor-value,
+.dark a.jsoneditor-value,
+.dark div.jsoneditor-default,
+.dark div.jsoneditor-readonly,
+.dark div.jsoneditor td,
+.dark div.jsoneditor th,
+.dark div.jsoneditor textarea,
+.dark pre.jsoneditor-preview,
+.dark .jsoneditor-schema-error,
+.dark .jsoneditor-popover {
+  color: var(--card-foreground);
+}
+
+.dark div.jsoneditor td.jsoneditor-separator {
+  color: var(--muted-foreground);
+}
+
+.dark div.jsoneditor-readonly {
+  color: rgba(244, 244, 245, 0.6);
+}
+
+.dark div.jsoneditor-field.jsoneditor-empty::after,
+.dark div.jsoneditor-value.jsoneditor-empty::after {
+  color: rgba(244, 244, 245, 0.35);
+}
+
+/* Dark: value colors with better contrast */
+.dark div.jsoneditor-value.jsoneditor-string {
+  color: #4ade80;
+}
+
+.dark div.jsoneditor-value.jsoneditor-number {
+  color: #fb7185;
+}
+
+.dark div.jsoneditor-value.jsoneditor-boolean {
+  color: #fbbf24;
+}
+
+.dark div.jsoneditor-value.jsoneditor-null {
+  color: #93c5fd;
+}
+
+.dark div.jsoneditor-value.jsoneditor-url,
+.dark a.jsoneditor-value.jsoneditor-url {
+  color: #34d399;
+}
+
+/* Dark: selection + edit highlight */
+.dark tr.jsoneditor-highlight,
+.dark tr.jsoneditor-selected {
+  background-color: rgba(148, 163, 184, 0.16);
+}
+
+.dark div.jsoneditor-field[contenteditable=true]:focus,
+.dark div.jsoneditor-field[contenteditable=true]:hover,
+.dark div.jsoneditor-value[contenteditable=true]:focus,
+.dark div.jsoneditor-value[contenteditable=true]:hover,
+.dark div.jsoneditor-field.jsoneditor-highlight,
+.dark div.jsoneditor-value.jsoneditor-highlight {
+  background-color: rgba(56, 189, 248, 0.14);
+  border-color: rgba(56, 189, 248, 0.35);
+}
+
+.dark div.jsoneditor-field.jsoneditor-highlight-active,
+.dark div.jsoneditor-field.jsoneditor-highlight-active:focus,
+.dark div.jsoneditor-field.jsoneditor-highlight-active:hover,
+.dark div.jsoneditor-value.jsoneditor-highlight-active,
+.dark div.jsoneditor-value.jsoneditor-highlight-active:focus,
+.dark div.jsoneditor-value.jsoneditor-highlight-active:hover {
+  background-color: rgba(56, 189, 248, 0.22);
+  border-color: rgba(56, 189, 248, 0.55);
+}
+
+/* Dark: menu search input + search icons */
+.dark .jsoneditor-search input {
+  background: rgba(255, 255, 255, 0.08);
+  color: #e5e7eb;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  padding: 0 8px;
+}
+
+.dark .jsoneditor-search input::placeholder {
+  color: rgba(229, 231, 235, 0.75);
+}
+
+.dark .jsoneditor-search button {
+  filter: invert(1);
+  opacity: 0.9;
+}
+
+.dark .jsoneditor-search button:hover {
+  opacity: 1;
+}
+
+/* Dark: tree icons (expand/collapse/context menu/drag handle) */
+.dark div.jsoneditor-tree button.jsoneditor-button,
+.dark div.jsoneditor-tree .jsoneditor-button {
+  filter: invert(1);
+  opacity: 0.95;
+}
+
+.dark div.jsoneditor-tree button.jsoneditor-button:focus {
+  background-color: rgba(255, 255, 255, 0.08);
+  outline: rgba(255, 255, 255, 0.12) solid 1px;
+}
+
+.dark div.jsoneditor-tree div.jsoneditor-show-more {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: rgba(244, 244, 245, 0.7);
+}
+
+.dark div.jsoneditor-tree div.jsoneditor-show-more a {
+  color: rgba(244, 244, 245, 0.75);
+}
+
+/* Dark: context menu */
+.dark .jsoneditor-contextmenu .jsoneditor-menu {
+  background: var(--card);
+  border-color: var(--border);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+}
+
+.dark .jsoneditor-contextmenu .jsoneditor-menu button {
+  color: var(--card-foreground);
+}
+
+.dark .jsoneditor-contextmenu .jsoneditor-menu button:hover,
+.dark .jsoneditor-contextmenu .jsoneditor-menu button:focus {
+  background: var(--muted);
+}

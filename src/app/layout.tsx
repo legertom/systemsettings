@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "jsoneditor/dist/jsoneditor.css";
+import "./jsoneditor-theme.css";
 import { ThemeToggle } from "@/components/ThemeToggle";
 
 export const metadata: Metadata = {
@@ -31,11 +32,11 @@ export default function RootLayout({
       </head>
       <body className="antialiased">
         <div className="min-h-dvh bg-background text-foreground">
-          <header className="border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950">
+          <header className="border-b border-border bg-card/85 backdrop-blur">
             <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
               <div className="text-sm font-semibold">System Settings Trainer</div>
               <div className="flex items-center gap-3">
-                <div className="hidden text-xs text-zinc-600 dark:text-zinc-400 sm:block">
+                <div className="hidden text-xs text-muted-foreground sm:block">
                   Anonymous practice environment
                 </div>
                 <ThemeToggle />

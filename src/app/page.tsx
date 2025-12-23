@@ -6,7 +6,7 @@ export default async function Home() {
   return (
     <main className="mx-auto max-w-6xl px-4 py-8">
       <h1 className="text-xl font-semibold">Training scenarios</h1>
-      <p className="mt-2 max-w-2xl text-sm text-zinc-600 dark:text-zinc-400">
+      <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
         Pick a scenario to practice editing system settings. There’s no grading
         or time limit—click Save to get gentle guidance and see what’s left.
       </p>
@@ -16,13 +16,13 @@ export default async function Home() {
           <Link
             key={s.id}
             href={`/s/${encodeURIComponent(s.id)}`}
-            className="rounded-lg border border-zinc-200 bg-white p-4 hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-950 dark:hover:border-zinc-700"
+            className="rounded-xl border border-border bg-card p-4 shadow-sm transition hover:-translate-y-0.5 hover:border-zinc-300/80 hover:shadow"
           >
             <div className="text-sm font-semibold">{s.title}</div>
             {s.description ? (
-              <div className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">{s.description}</div>
+              <div className="mt-1 text-sm text-muted-foreground">{s.description}</div>
             ) : null}
-            <div className="mt-3 text-xs font-medium text-zinc-900">
+            <div className="mt-3 text-xs font-medium text-foreground">
               Open →
             </div>
           </Link>

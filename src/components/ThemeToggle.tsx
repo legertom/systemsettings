@@ -49,14 +49,14 @@ export function ThemeToggle() {
   }, []);
 
   return (
-    <div className="flex items-center gap-1 rounded-md border border-zinc-200 bg-white p-1 text-xs dark:border-zinc-800 dark:bg-zinc-950">
+    <div className="flex items-center gap-1 rounded-md border border-border bg-card p-1 text-xs">
       <button
         type="button"
         onClick={() => setTheme("light")}
         className={`rounded px-2 py-1 ${
           theme === "light"
-            ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
-            : "text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-900"
+            ? "bg-primary text-primary-foreground"
+            : "text-muted-foreground hover:bg-muted"
         }`}
       >
         Light
@@ -66,8 +66,8 @@ export function ThemeToggle() {
         onClick={() => setTheme("dark")}
         className={`rounded px-2 py-1 ${
           theme === "dark"
-            ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
-            : "text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-900"
+            ? "bg-primary text-primary-foreground"
+            : "text-muted-foreground hover:bg-muted"
         }`}
       >
         Dark
@@ -77,8 +77,8 @@ export function ThemeToggle() {
         onClick={() => setTheme("system")}
         className={`rounded px-2 py-1 ${
           theme === "system"
-            ? "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900"
-            : "text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-900"
+            ? "bg-primary text-primary-foreground"
+            : "text-muted-foreground hover:bg-muted"
         }`}
       >
         System
@@ -86,4 +86,3 @@ export function ThemeToggle() {
     </div>
   );
 }
-
