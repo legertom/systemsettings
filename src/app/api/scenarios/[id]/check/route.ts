@@ -2,9 +2,10 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getScenario } from "@/lib/scenarioStore";
 import { evaluateScenario } from "@/lib/evaluateScenario";
+import { jsonValueSchema } from "@/lib/scenarioSchemas";
 
 const bodySchema = z.object({
-  json: z.unknown(),
+  json: jsonValueSchema,
 });
 
 export async function POST(request: Request, context: { params: Promise<{ id: string }> }) {
@@ -17,7 +18,6 @@ export async function POST(request: Request, context: { params: Promise<{ id: st
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
 
-  const evaluation = evaluateScenario(scenario, parsedBody.data.json as any);
+  const evaluation = evaluateScenario(scenario, parsedBody.data.json);
   return NextResponse.json({ evaluation });
 }
-

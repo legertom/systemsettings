@@ -32,7 +32,7 @@ export const JsonEditor = forwardRef<JsonEditorHandle, Props>(function JsonEdito
       setJson: (next: JsonValue) => {
         const editor = editorRef.current;
         if (!editor) return;
-        editor.set(next as any);
+        editor.set(next);
       },
     }),
     [initialValue]
@@ -55,7 +55,7 @@ export const JsonEditor = forwardRef<JsonEditorHandle, Props>(function JsonEdito
       },
     });
 
-    editor.set(initialValue as any);
+    editor.set(initialValue);
     editorRef.current = editor;
 
     return () => {

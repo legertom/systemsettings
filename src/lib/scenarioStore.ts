@@ -2,41 +2,69 @@ import type { Scenario } from "@/lib/types";
 import { seedScenarios } from "@/lib/seedScenarios";
 import { connectToDb } from "@/lib/db";
 import { ScenarioModel } from "@/lib/models/ScenarioModel";
+import { scenarioSchema } from "@/lib/scenarioSchemas";
 
 export type ScenarioSummary = Pick<Scenario, "id" | "title" | "description">;
 
 export async function listScenarios(): Promise<ScenarioSummary[]> {
-  const scenarios = await getAllScenarios();
-  return scenarios.map(({ id, title, description }) => ({ id, title, description }));
+  const seedSummaries = seedScenarios.map(toSummary);
+  if (!process.env.MONGODB_URI) return seedSummaries;
+
+  const dbScenarios = await getDbScenarios();
+  const byId = new Map<string, ScenarioSummary>();
+  for (const scenario of seedSummaries) byId.set(scenario.id, scenario);
+  for (const scenario of dbScenarios.map(toSummary)) byId.set(scenario.id, scenario);
+  return Array.from(byId.values());
 }
 
 export async function getScenario(id: string): Promise<Scenario | null> {
-  const scenarios = await getAllScenarios();
-  return scenarios.find((s) => s.id === id) ?? null;
+  const seedScenario = seedScenarios.find((scenario) => scenario.id === id) ?? null;
+  if (!process.env.MONGODB_URI) return seedScenario;
+
+  await connectToDb();
+  const doc: unknown = await ScenarioModel.findOne({ id }).lean().exec();
+  if (!doc) return seedScenario;
+
+  const parsed = scenarioSchema.safeParse(doc);
+  if (!parsed.success) {
+    console.warn(
+      `[scenarioStore] Ignoring invalid DB scenario "${id}": ${parsed.error.issues
+        .map((issue) => issue.path.join("."))
+        .join(", ")}`
+    );
+    return seedScenario;
+  }
+
+  return parsed.data;
 }
 
-async function getAllScenarios(): Promise<Scenario[]> {
-  // Demo-first: seed scenarios committed in the repo.
-  // If MONGODB_URI is set, also load scenarios from MongoDB (merged by id, DB wins).
-  const scenarios: Scenario[] = [...seedScenarios];
+async function getDbScenarios(): Promise<Scenario[]> {
+  await connectToDb();
+  const docs: unknown[] = await ScenarioModel.find({}).lean().exec();
 
-  if (process.env.MONGODB_URI) {
-    await connectToDb();
-    const docs = await ScenarioModel.find({}).lean();
-    const fromDb = docs.map((d: any) => ({
-      id: d.id,
-      title: d.title,
-      description: d.description,
-      instructions: d.instructions,
-      initialJson: d.initialJson,
-      checks: d.checks,
-    })) as Scenario[];
-
-    const byId = new Map<string, Scenario>();
-    for (const s of scenarios) byId.set(s.id, s);
-    for (const s of fromDb) byId.set(s.id, s);
-    return Array.from(byId.values());
+  const scenarios: Scenario[] = [];
+  for (const doc of docs) {
+    const parsed = scenarioSchema.safeParse(doc);
+    if (parsed.success) {
+      scenarios.push(parsed.data);
+      continue;
+    }
+    const id =
+      doc && typeof doc === "object" && "id" in doc ? String((doc as { id?: unknown }).id) : "unknown";
+    console.warn(
+      `[scenarioStore] Ignoring invalid DB scenario "${id}": ${parsed.error.issues
+        .map((issue) => issue.path.join("."))
+        .join(", ")}`
+    );
   }
 
   return scenarios;
+}
+
+function toSummary(scenario: Scenario): ScenarioSummary {
+  return {
+    id: scenario.id,
+    title: scenario.title,
+    description: scenario.description,
+  };
 }

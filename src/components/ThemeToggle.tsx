@@ -22,13 +22,7 @@ function applyTheme(theme: Theme) {
 }
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>("system");
-
-  useEffect(() => {
-    const initial = getInitialTheme();
-    setTheme(initial);
-    applyTheme(initial);
-  }, []);
+  const [theme, setTheme] = useState<Theme>(() => getInitialTheme());
 
   useEffect(() => {
     if (theme === "system") window.localStorage.removeItem(STORAGE_KEY);
@@ -40,9 +34,7 @@ export function ThemeToggle() {
     if (!window.matchMedia) return;
     const mql = window.matchMedia("(prefers-color-scheme: dark)");
     const handler = () => {
-      const current = getInitialTheme();
-      setTheme(current);
-      applyTheme(current);
+      if (getInitialTheme() === "system") applyTheme("system");
     };
     mql.addEventListener?.("change", handler);
     return () => mql.removeEventListener?.("change", handler);

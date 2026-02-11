@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { listScenarios } from "@/lib/scenarioStore";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const scenarios = await listScenarios();
   return (
