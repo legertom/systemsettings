@@ -5,24 +5,42 @@ type Props = {
   evaluation: ScenarioEvaluation | null;
   progressLabel: string | null;
   onReset: () => void;
+  onStartTutorial: () => void;
 };
 
-export function ScenarioSidebar({ scenario, evaluation, progressLabel, onReset }: Props) {
+export function ScenarioSidebar({
+  scenario,
+  evaluation,
+  progressLabel,
+  onReset,
+  onStartTutorial,
+}: Props) {
   return (
-    <section className="rounded-xl border border-border bg-card p-4 shadow-sm">
+    <section data-tutorial="sidebar" className="rounded-xl border border-border bg-card p-4 shadow-sm">
       <div className="text-sm font-semibold">{scenario.title}</div>
       {scenario.description ? (
         <div className="mt-2 text-sm text-muted-foreground">{scenario.description}</div>
       ) : null}
 
-      <div className="mt-4 text-xs font-semibold uppercase tracking-wide text-zinc-600">
-        Instructions
+      <div className="mt-4 flex items-center gap-2">
+        <div className="text-xs font-semibold uppercase tracking-wide text-zinc-600">
+          Instructions
+        </div>
+        <button
+          type="button"
+          onClick={onStartTutorial}
+          className="ml-auto rounded-md border border-border bg-card px-2.5 py-1 text-xs font-medium hover:bg-muted"
+        >
+          Start Tutorial
+        </button>
       </div>
-      <ol className="mt-2 list-decimal space-y-2 pl-4 text-sm">
-        {scenario.instructions.map((step, idx) => (
-          <li key={idx}>{step}</li>
-        ))}
-      </ol>
+      <div data-tutorial="instructions">
+        <ol className="mt-2 list-decimal space-y-2 pl-4 text-sm">
+          {scenario.instructions.map((step, idx) => (
+            <li key={idx}>{step}</li>
+          ))}
+        </ol>
+      </div>
 
       <div className="mt-5 flex gap-2">
         <button
@@ -37,9 +55,11 @@ export function ScenarioSidebar({ scenario, evaluation, progressLabel, onReset }
         </div>
       </div>
 
-      {evaluation ? (
-        <div className="mt-4 rounded-md border border-border bg-muted p-3">
-          <div className="text-sm font-semibold">{evaluation.ok ? "All set" : "Keep going"}</div>
+      <div data-tutorial="feedback" className="mt-4 rounded-md border border-border bg-muted p-3">
+        <div className="text-sm font-semibold">
+          {evaluation ? (evaluation.ok ? "All set" : "Keep going") : "Feedback and hints"}
+        </div>
+        {evaluation ? (
           <ul className="mt-2 space-y-2 text-sm">
             {evaluation.results.map((result) => (
               <li key={result.checkId} className="flex items-start gap-2">
@@ -55,9 +75,13 @@ export function ScenarioSidebar({ scenario, evaluation, progressLabel, onReset }
               </li>
             ))}
           </ul>
-        </div>
-      ) : null}
+        ) : (
+          <div className="mt-2 text-sm text-muted-foreground">
+            Click <span className="font-medium text-foreground">Save System Settings</span> to see
+            progress updates and hints.
+          </div>
+        )}
+      </div>
     </section>
   );
 }
-

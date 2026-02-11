@@ -11,7 +11,7 @@ type Props = {
 
 export function ScenarioEditorPanel({ initialJson, editorRef, isChecking, onCheckWork }: Props) {
   return (
-    <section className="rounded-xl border border-border bg-card p-3 shadow-sm">
+    <section data-tutorial="editor-panel" className="rounded-xl border border-border bg-card p-3 shadow-sm">
       <div className="mb-3 rounded-md bg-sky-50 p-3 text-sm text-sky-950 dark:bg-sky-950/40 dark:text-sky-50">
         Start in <span className="font-semibold">View</span> mode to explore safely. Switch to{" "}
         <span className="font-semibold">Tree</span> to edit.{" "}
@@ -24,6 +24,7 @@ export function ScenarioEditorPanel({ initialJson, editorRef, isChecking, onChec
         <button
           type="button"
           onClick={onCheckWork}
+          data-tutorial="save-button"
           disabled={isChecking}
           className="w-full rounded-xl bg-red-700 px-6 py-4 text-center text-xl font-semibold text-white shadow-sm hover:bg-red-800 disabled:opacity-60"
         >

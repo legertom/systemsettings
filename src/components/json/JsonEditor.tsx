@@ -64,5 +64,5 @@ export const JsonEditor = forwardRef<JsonEditorHandle, Props>(function JsonEdito
     };
   }, [initialValue, readOnlyTextMode]);
 
-  return <div ref={containerRef} className="min-h-[560px]" />;
+  return <div ref={containerRef} data-tutorial="json-editor" className="min-h-[560px]" />;
 });
